@@ -17,7 +17,6 @@ public class ServiceJoueurImpl implements IserviceJoueur {
     @Override
     public void ajouterJoueur(String nomJoueur) {
         joueurs.getJoueurs().add(new JoueurDTO(0, nomJoueur));
-        //TODO
     }
 
     @Override
