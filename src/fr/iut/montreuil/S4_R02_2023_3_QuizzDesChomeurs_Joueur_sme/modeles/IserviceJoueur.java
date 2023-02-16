@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public interface IserviceJoueur {
 
+    void ajouterJoueur(String nomJoueur);
+
+    void supprimerJoueur(String nomJoueur);
+
     ArrayList<JoueurDTO> listerJoueurs();
 
     JoueurDTO transmettreInfoJoueur(String nomJoueur);
