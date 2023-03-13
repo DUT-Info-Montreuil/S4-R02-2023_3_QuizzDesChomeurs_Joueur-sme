@@ -2,6 +2,7 @@ package fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.impl;
 
 import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto.JoueurDTO;
 import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto.ListeJoueursDTO;
+import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto.ScoreDTO;
 import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.modeles.IserviceJoueur;
 
 import java.util.ArrayList;
@@ -15,13 +16,18 @@ public class ServiceJoueurImpl implements IserviceJoueur {
     }
 
     @Override
-    public void ajouterJoueur(String nomJoueur) {
-        joueurs.getJoueurs().add(new JoueurDTO(0, nomJoueur));
+    public void ajouterJoueur( String pseudo, String prenom, String nom, int anneeDeNaissance, int languePreferee, String interets) {
+        joueurs.getJoueurs().add(new JoueurDTO(pseudo, prenom, nom, anneeDeNaissance, languePreferee, interets));
     }
 
     @Override
-    public void supprimerJoueur(String nomJoueur) {
-    //TODO
+    public void supprimerJoueur(String pseudo) {
+        int i = 0;
+        boolean supprime = false;
+        while(i<joueurs.getJoueurs().size() && !supprime){
+            if(joueurs.getJoueurs().get(i).getPseudo().equals(pseudo)) joueurs.getJoueurs().remove(i);
+            i++;
+        }
     }
 
     @Override
@@ -30,8 +36,63 @@ public class ServiceJoueurImpl implements IserviceJoueur {
     }
 
     @Override
-    public JoueurDTO transmettreInfoJoueur(String nomJoueur) {
+    public JoueurDTO transmettreInfoJoueur(String pseudo) {
+        JoueurDTO joueur = null;
+        for(JoueurDTO j : joueurs.getJoueurs()){
+            if(j.getNom().equals(pseudo)) joueur = j;
+        }
+        return joueur;
+    }
+
+    @Override
+    public void gestionScoreJoueur(int points, int temps, String pseudo) {
+        for(JoueurDTO j : joueurs.getJoueurs()){
+            if(j.getNom().equals(pseudo)) j.getScores().add(0, new ScoreDTO(points, temps));
+        }
+    }
+
+    @Override
+    public String fournirStatsJoueurs() {
+        String stats = "";
+        for(JoueurDTO j : joueurs.getJoueurs()){
+            stats += "Statistiques de " + j.getPseudo() + " : \n";
+            if (j.getScores().isEmpty()) stats += j.getPseudo() + " n'a pas encore joué.\n";
+            else {
+                int partiesJouees, bonnesReponses, moyenne, dureeMoyenne;
+
+                partiesJouees = j.getScores().size();
+                bonnesReponses = 0;
+                dureeMoyenne = 0;
+
+                for(ScoreDTO score: j.getScores()){
+                    bonnesReponses += score.getPoints();
+                    dureeMoyenne += score.getTemps();
+                }
+                dureeMoyenne = dureeMoyenne/partiesJouees;
+                moyenne = bonnesReponses/partiesJouees;
+
+                stats += "\t" + partiesJouees + " parties jouées\n\t" + bonnesReponses + " bonnes réponses sur " + (10*partiesJouees)
+                        + ".\n\tMoyenne générale : " + moyenne
+                        + "/10\n\tDurée moyenne : " + (dureeMoyenne/60) + " min " + (dureeMoyenne%60) + "s\n";
+
+                stats += "\t5 dernières parties jouées : \n";
+                int i = 0;
+                while(i<partiesJouees && i<5){
+                    stats += "\t\t" + (i+1) + j.getScores().get(i).getPoints()
+                            + "/10 en " + (j.getScores().get(i).getTemps()/60) + " min " + (j.getScores().get(i).getTemps()%60) + "s";
+                    i++;
+                }
+
+            }
+            stats += "\n";
+        }
+        return stats;
+    }
+
+    @Override
+    public ArrayList<JoueurDTO> fournirClassement() {
         //TODO
         return null;
     }
+
 }

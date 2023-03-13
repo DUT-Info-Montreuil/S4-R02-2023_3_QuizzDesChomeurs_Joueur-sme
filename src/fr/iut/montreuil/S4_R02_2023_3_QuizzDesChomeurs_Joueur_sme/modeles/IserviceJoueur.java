@@ -6,11 +6,18 @@ import java.util.ArrayList;
 
 public interface IserviceJoueur {
 
-    void ajouterJoueur(String nomJoueur);
+    void ajouterJoueur(String pseudo, String prenom, String nom, int anneeDeNaissance, int languePreferee, String interets);
 
-    void supprimerJoueur(String nomJoueur);
+    void supprimerJoueur(String pseudo);
 
     ArrayList<JoueurDTO> listerJoueurs();
 
-    JoueurDTO transmettreInfoJoueur(String nomJoueur);
+    JoueurDTO transmettreInfoJoueur(String pseudo);
+
+    void gestionScoreJoueur(int points, int temps, String pseudo);
+
+    String fournirStatsJoueurs();
+
+    ArrayList<JoueurDTO> fournirClassement();
+
 }

@@ -1,22 +1,44 @@
 package fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto;
 
+
+import java.util.ArrayList;
+
 public class JoueurDTO {
 
 
-    private int score;
+    private ArrayList<ScoreDTO> scores;
+    private String prenom;
     private String nom;
+    private String pseudo;
+    private int anneeDeNaissance;
+    private int languePreferee;
+    private String interets;
 
-    public JoueurDTO(int score, String nom) {
-        this.score = score;
+
+    public JoueurDTO(String pseudo, String prenom, String nom, int anneeDeNaissance, int languePreferee, String interets) {
+        this.scores = new ArrayList<>();
+        this.pseudo = pseudo;
+        this.prenom = prenom;
         this.nom = nom;
+        this.anneeDeNaissance = anneeDeNaissance;
+        this.languePreferee = languePreferee;
+        this.interets = interets;
     }
 
-    public int getScore() {
-        return score;
+    public ArrayList<ScoreDTO> getScores() {
+        return scores;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setScore(ArrayList<ScoreDTO> scores) {
+        this.scores = scores;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getNom() {
@@ -27,4 +49,35 @@ public class JoueurDTO {
         this.nom = nom;
     }
 
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public int getAnneeDeNaissance() {
+        return anneeDeNaissance;
+    }
+
+    public void setAnneeDeNaissance(int anneeDeNaissance) {
+        this.anneeDeNaissance = anneeDeNaissance;
+    }
+
+    public String getInterets() {
+        return interets;
+    }
+
+    public void setInterets(String interets) {
+        this.interets = interets;
+    }
+
+    public int getLanguePreferee() {
+        return languePreferee;
+    }
+
+    public void setLanguePreferee(int languePreferee) {
+        this.languePreferee = languePreferee;
+    }
 }
