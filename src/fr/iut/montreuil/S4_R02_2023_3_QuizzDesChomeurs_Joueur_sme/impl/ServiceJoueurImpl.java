@@ -39,7 +39,7 @@ public class ServiceJoueurImpl implements IserviceJoueur {
     public JoueurDTO transmettreInfoJoueur(String pseudo) {
         JoueurDTO joueur = null;
         for(JoueurDTO j : joueurs.getJoueurs()){
-            if(j.getNom().equals(pseudo)) joueur = j;
+            if(j.getPseudo().equals(pseudo)) joueur = j;
         }
         return joueur;
     }
@@ -47,7 +47,7 @@ public class ServiceJoueurImpl implements IserviceJoueur {
     @Override
     public void gestionScoreJoueur(int points, int temps, String pseudo) {
         for(JoueurDTO j : joueurs.getJoueurs()){
-            if(j.getNom().equals(pseudo)) j.getScores().add(0, new ScoreDTO(points, temps));
+            if(j.getPseudo().equals(pseudo)) j.getScores().add( new ScoreDTO(points, temps));
         }
     }
 
