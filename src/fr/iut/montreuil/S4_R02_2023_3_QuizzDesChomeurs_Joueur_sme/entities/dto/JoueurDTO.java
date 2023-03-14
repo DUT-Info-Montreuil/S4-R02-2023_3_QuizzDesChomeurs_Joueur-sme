@@ -1,6 +1,8 @@
 package fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto;
 
 
+import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.utils.Langue;
+
 import java.util.ArrayList;
 
 public class JoueurDTO {
@@ -11,11 +13,11 @@ public class JoueurDTO {
     private String nom;
     private String pseudo;
     private int anneeDeNaissance;
-    private int languePreferee;
+    private Langue languePreferee;
     private String interets;
 
 
-    public JoueurDTO(String pseudo, String prenom, String nom, int anneeDeNaissance, int languePreferee, String interets) {
+    public JoueurDTO(String pseudo, String prenom, String nom, int anneeDeNaissance, Langue languePreferee, String interets) {
         this.scores = new ArrayList<>();
         this.pseudo = pseudo;
         this.prenom = prenom;
@@ -73,11 +75,11 @@ public class JoueurDTO {
         this.interets = interets;
     }
 
-    public int getLanguePreferee() {
+    public Langue getLanguePreferee() {
         return languePreferee;
     }
 
-    public void setLanguePreferee(int languePreferee) {
+    public void setLanguePreferee(Langue languePreferee) {
         this.languePreferee = languePreferee;
     }
 }

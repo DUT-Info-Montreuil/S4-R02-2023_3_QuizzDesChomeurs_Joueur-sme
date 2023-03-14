@@ -4,6 +4,8 @@ import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto.J
 import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto.ListeJoueursDTO;
 import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.entities.dto.ScoreDTO;
 import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.modeles.IserviceJoueur;
+import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.utils.Langue;
+import fr.iut.montreuil.S4_R02_2023_3_QuizzDesChomeurs_Joueur_sme.utils.exceptions.PseudoDejaPrisException;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,10 @@ public class ServiceJoueurImpl implements IserviceJoueur {
     }
 
     @Override
-    public void ajouterJoueur( String pseudo, String prenom, String nom, int anneeDeNaissance, int languePreferee, String interets) {
+    public void ajouterJoueur(String pseudo, String prenom, String nom, int anneeDeNaissance, Langue languePreferee, String interets) throws PseudoDejaPrisException {
+        for(JoueurDTO j : joueurs.getJoueurs()){
+            if(j.getPseudo().equals(pseudo)) throw new PseudoDejaPrisException();
+        }
         joueurs.getJoueurs().add(new JoueurDTO(pseudo, prenom, nom, anneeDeNaissance, languePreferee, interets));
     }
 
