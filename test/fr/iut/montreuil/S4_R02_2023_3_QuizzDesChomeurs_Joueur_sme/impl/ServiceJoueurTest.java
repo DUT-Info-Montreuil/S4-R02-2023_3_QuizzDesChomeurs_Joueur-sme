@@ -14,6 +14,7 @@ public class ServiceJoueurTest {
 
 
     ServiceJoueurImpl service = new ServiceJoueurImpl();
+    ServiceQuizzImpl serviceQuizz = new ServiceQuizzImpl();
 
 
     /*public void ajouterJoueur( String pseudo, String prenom, String nom, int anneeDeNaissance, int languePreferee, String interets) {
@@ -29,7 +30,7 @@ public class ServiceJoueurTest {
         assertEquals("Antoine",service.listerJoueurs().get(0).getPrenom());
         assertEquals("puradosama",service.listerJoueurs().get(0).getPseudo());
         assertEquals("Bouche",service.listerJoueurs().get(0).getNom());
-        assertEquals(2,service.listerJoueurs().get(0).getLanguePreferee());
+        assertEquals(Langue.fra,service.listerJoueurs().get(0).getLanguePreferee());
         assertEquals("jouer",service.listerJoueurs().get(0).getInterets());
 
 
@@ -54,7 +55,7 @@ public class ServiceJoueurTest {
         service.supprimerJoueur("puradosama");
         assertEquals("mana", service.listerJoueurs().get(0).getPseudo());
         service.supprimerJoueur("existePas");
-        assertEquals(2,this.service.listerJoueurs().size());
+        assertEquals(1,this.service.listerJoueurs().size());
     }
     @Test
     public void testListerJoueur() throws PseudoDejaPrisException {
@@ -71,13 +72,13 @@ public class ServiceJoueurTest {
         assertEquals("Antoine",service.transmettreInfoJoueur("puradosama").getPrenom());
         assertEquals("Bouche",service.transmettreInfoJoueur("puradosama").getNom());
         assertEquals(2003,service.transmettreInfoJoueur("puradosama").getAnneeDeNaissance());
-        assertEquals(2,service.transmettreInfoJoueur("puradosama").getLanguePreferee());
+        assertEquals(Langue.fra,service.transmettreInfoJoueur("puradosama").getLanguePreferee());
         assertEquals("jouer",service.transmettreInfoJoueur("puradosama").getInterets());
 
         assertEquals("Lucas",service.transmettreInfoJoueur("mana").getPrenom());
         assertEquals("Astier",service.transmettreInfoJoueur("mana").getNom());
         assertEquals(2003,service.transmettreInfoJoueur("mana").getAnneeDeNaissance());
-        assertEquals(2,service.transmettreInfoJoueur("mana").getLanguePreferee());
+        assertEquals(Langue.fra,service.transmettreInfoJoueur("mana").getLanguePreferee());
         assertEquals("touhou",service.transmettreInfoJoueur("mana").getInterets());
     }
 
@@ -94,6 +95,26 @@ public class ServiceJoueurTest {
         service.gestionScoreJoueur(3,5,"puradosama");
         assertEquals(3,service.transmettreInfoJoueur("puradosama").getScores().get(1).getPoints());
         assertEquals(5,service.transmettreInfoJoueur("puradosama").getScores().get(1).getTemps());
+    }
+    @Test
+    public void testfournirclassment() throws PseudoDejaPrisException {
+        service.ajouterJoueur("puradosama", "Antoine", "Bouche", 2003,Langue.fra,"jouer");
+        service.ajouterJoueur("mana", "Lucas", "Astier", 2003,Langue.fra,"touhou");
+        service.ajouterJoueur("lalie", "Axel", "Baudier", 2001,Langue.fra,"punchout");
+        service.ajouterJoueur("luc","luc","xiang",2003,Langue.fra,"LebronJames");
+        service.ajouterJoueur("pyroxis","naulan","...",2003,Langue.fra,"manifester");
+        service.gestionScoreJoueur(4,3,"puradosama");
+        service.gestionScoreJoueur(2,6,"mana");
+        service.gestionScoreJoueur(5,3,"lalie");
+        service.gestionScoreJoueur(10,2,"luc");
+        service.gestionScoreJoueur(3,5,"puradosama");
+        service.gestionScoreJoueur(0,4,"naulan");
+
+        assertEquals("luc",service.fournirClassement().get(0).getPseudo());
+        assertEquals("lalie",service.fournirClassement().get(1).getPseudo());
+        assertEquals("puradosama",service.fournirClassement().get(2).getPseudo());
+        assertEquals("mana",service.fournirClassement().get(3).getPseudo());
+        assertEquals("pyroxis",service.fournirClassement().get(4).getPseudo());
     }
 
 

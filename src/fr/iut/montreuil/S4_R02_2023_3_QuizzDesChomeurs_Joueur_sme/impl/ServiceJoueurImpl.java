@@ -25,6 +25,7 @@ public class ServiceJoueurImpl implements IserviceJoueur {
         joueurs.getJoueurs().add(new JoueurDTO(pseudo, prenom, nom, anneeDeNaissance, languePreferee, interets));
     }
 
+
     @Override
     public void supprimerJoueur(String pseudo) {
         int i = 0;
@@ -96,8 +97,34 @@ public class ServiceJoueurImpl implements IserviceJoueur {
 
     @Override
     public ArrayList<JoueurDTO> fournirClassement() {
-        //TODO
-        return null;
+
+        ArrayList<JoueurDTO> classement = new ArrayList<>();
+        ArrayList<JoueurDTO> listTemp = new ArrayList<>();
+        for (int i =0; i< joueurs.getJoueurs().size();i++){
+            listTemp.add(joueurs.getJoueurs().get(i));
+        }
+        for (int i= 0; i<joueurs.getJoueurs().size();i++) {
+            JoueurDTO temp = listTemp.get(0);
+            double meilleurMoyenne = 0;
+            for (int x = 0; x < listTemp.get(0).getScores().size(); x++) {
+                meilleurMoyenne += listTemp.get(0).getScores().get(x).getPoints();
+            }
+            meilleurMoyenne =meilleurMoyenne/listTemp.get(0).getScores().size();
+            for (int j = 1; j < listTemp.size(); j++) {
+                double moyenneNouv = 0;
+                for (int y = 0; y < listTemp.get(j).getScores().size(); y++) {
+                    moyenneNouv += listTemp.get(j).getScores().get(y).getPoints();
+                }
+                moyenneNouv= moyenneNouv/listTemp.get(j).getScores().size();
+                if (meilleurMoyenne < moyenneNouv) {
+                    meilleurMoyenne = moyenneNouv;
+                    temp = listTemp.get(j);
+                }
+            }
+            listTemp.remove(temp);
+            classement.add(temp);
+        }
+        return classement;
     }
 
 }
